@@ -16,30 +16,36 @@ import seaborn as sns
 
 @st.cache(allow_output_mutation=True)
 def load_test_data():
+    """cached function that returns the working examples for predictions"""
     return pd.read_csv("../data/output_data/X_test.csv")
 
 @st.cache(allow_output_mutation=True)
 def load_training_data() : 
+    """cached function thats returns the dataframe the model was trained on"""
     return pd.read_csv("../data/output_data/X_train.csv")
 
 @st.cache(allow_output_mutation=True)
 def load_variable_description() : 
+    """returns variables descriptions"""
     #return pd.read_csv("../data/input_data/HomeCredit_columns_description.csv", index_col=0)
     return pd.read_csv("../data/output_data/new_vars.csv", index_col=0)
     
 
 @st.cache(allow_output_mutation=True)
 def load_model() :
+    """returnz the estimator"""
     return load("../model/estimator.joblib")
   
 @st.cache()
 def compute_tree_explainer(model, data) : 
+    """compute and returns the tree explainer based on a model and the training data"""
     explainer = shap.TreeExplainer(model.booster_, data=data.sample(2000, random_state=12),
                                    feature_dependence="interventional", output="probabilities")
     return explainer
     
     
 def predict(id_curr):
+    """returns the elements of prediction page"""
     sns.reset_orig()
     X_test = load_test_data()
     X_train = load_training_data()
