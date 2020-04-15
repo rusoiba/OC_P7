@@ -7,27 +7,13 @@ Created on Thu Apr  2 10:58:30 2020
 """
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from bureau_explorer import bureau_explorer
 from prev_explorer import prev_explorer
 from application_explorer import application_explorer
 
-@st.cache(allow_output_mutation=True)
-def load_explorer_data():
-    """cached function that load and returns all necessary data for exploration"""
-    bb = pd.read_csv("../data/output_data/test_bb_agg.csv")#, nrows=100000)
-    bureau = pd.read_csv("../data/output_data/test_bureau.csv", index_col=0)#, nrows=100000)
-    ins = pd.read_csv("../data/output_data/test_ins.csv", index_col=0)#, nrows=100000)
-    ccb = pd.read_csv("../data/output_data/test_ccb.csv")#, nrows=100000)
-    pos = pd.read_csv("../data/output_data/test_pos.csv")#, nrows=100000)
-    prev = pd.read_csv("../data/output_data/test_prev.csv", index_col=0)#, nrows=100000)
-    return bb, bureau, ins, ccb, pos, prev
+from functions import load_variable_description,load_explorer_data
 
-def load_variable_description() : 
-    """cached function that returns variable description"""
-    return pd.read_csv("../data/input_data/HomeCredit_columns_description.csv", index_col=0)
-    
 def explorer(id_curr) : 
     """function that returns the explorer page enabling further filtering"""
     bb, bureau, ins, ccb, pos, prev = load_explorer_data()

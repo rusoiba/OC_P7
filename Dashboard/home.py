@@ -2,21 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Apr  2 13:58:46 2020
-
 @author: Alex
 """
+
+
 import streamlit as st
-from PIL import Image
-import pandas as pd
-
-
-@st.cache()
-def load_test_data():
-	"""cached function that returns our working examples for the dashboard"""
-    return pd.read_csv("../data/output_data/X_test.csv")
 
 def home() : 
-	"""principal page of the dashboard"""
+    """principal page of the dashboard"""
     st.markdown("This application provides 3 mains modules :")
     st.markdown("* **The prediction module :** enables you to assess client's liability based on its file")
     st.markdown("* **The explorer module :** enables you to dig deeper into your client informations,"

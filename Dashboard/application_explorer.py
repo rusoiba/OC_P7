@@ -10,14 +10,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-
+from functions import load_variable_description
 
 def load_raw_test_data(): 
-    return pd.read_csv("../data/input_data/application_test.csv")
+    return pd.read_csv("../../data/input_data/application_test.csv")
 
-def load_variable_description() : 
-    return pd.read_csv("../data/input_data/HomeCredit_columns_description.csv", index_col=0)
-    
+#def load_variable_description() : 
+#    return pd.read_csv("../../data/input_data/HomeCredit_columns_description.csv", index_col=0)
+#    
 
 def application_explorer(id_curr) : 
         test_data = load_raw_test_data()

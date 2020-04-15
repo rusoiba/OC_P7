@@ -9,11 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
-@st.cache()
-def load_raw_train_data(): 
-    return pd.read_csv("../data/input_data/application_train.csv")
-
+from functions import load_raw_train_data
 
 def statistics() : 
     data = load_raw_train_data().set_index("SK_ID_CURR")
@@ -25,9 +21,9 @@ def statistics() :
     if data[var].dtypes == int:
         agg_data = data.groupby(var)["TARGET"].agg(["size", "mean"])
         #st.dataframe(agg_data.loc[agg_data["size"]>100, "mean"])
-        agg_data.loc[agg_data["size"]>100, "mean"].plot.bar()
+        agg_data.loc[agg_data["size"]>100, "mean"].plot.barh()
         plt.title("Repayment Difficulties as a function of {}".format(var))
-        plt.ylabel("Probability of default")
+        plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
         
     elif data[var].dtypes == float:
@@ -38,14 +34,14 @@ def statistics() :
         x = pd.cut(data[var], bins=np.arange(min_var, max_var, (max_var-min_var)/10)).astype(str)
         y = data.groupby(x)["TARGET"].agg(["size", "mean"])
         plt.title("Repayment Difficulties as a function of {}".format(var))
-        plt.ylabel("Probability of default")
-        y.loc[y["size"]>100, "mean"].plot.bar()
+        plt.xlabel("Probability of default")
+        y.loc[y["size"]>100, "mean"].plot.barh()
        # plt.bar(x=x, height=y)
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
         
     else :
         agg_data = data.groupby(var)["TARGET"].agg(["size", "mean"])
-        agg_data.loc[agg_data["size"]>100, "mean"].plot.bar()
+        agg_data.loc[agg_data["size"]>100, "mean"].plot.barh()
         plt.title("Repayment Difficulties as a function of {}".format(var))
-        plt.ylabel("Probability of default")
+        plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)

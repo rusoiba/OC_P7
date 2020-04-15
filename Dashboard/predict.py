@@ -5,60 +5,23 @@ Created on Thu Apr  2 11:34:32 2020
 
 @author: Alex
 """
-from joblib import load
 import streamlit as st
 import pandas as pd
 import numpy as np
-import lightgbm
 import shap
-import matplotlib.pyplot as plt
 import seaborn as sns
+from functions import load_training_data, load_test_data,\
+load_variable_description, load_model, compute_tree_explainer
 
-@st.cache(allow_output_mutation=True)
-def load_test_data():
-    """cached function that returns the working examples for predictions"""
-    return pd.read_csv("../data/output_data/X_test.csv")
-
-@st.cache(allow_output_mutation=True)
-def load_training_data() : 
-    """cached function thats returns the dataframe the model was trained on"""
-    return pd.read_csv("../data/output_data/X_train.csv")
-
-@st.cache(allow_output_mutation=True)
-def load_variable_description() : 
-    """returns variables descriptions"""
-    #return pd.read_csv("../data/input_data/HomeCredit_columns_description.csv", index_col=0)
-    return pd.read_csv("../data/output_data/new_vars.csv", index_col=0)
-    
-
-@st.cache(allow_output_mutation=True)
-def load_model() :
-    """returnz the estimator"""
-    return load("../model/estimator.joblib")
-  
-@st.cache()
-def compute_tree_explainer(model, data) : 
-    """compute and returns the tree explainer based on a model and the training data"""
-    explainer = shap.TreeExplainer(model.booster_, data=data.sample(2000, random_state=12),
-                                   feature_dependence="interventional", output="probabilities")
-    return explainer
-    
     
 def predict(id_curr):
     """returns the elements of prediction page"""
     sns.reset_orig()
-    X_test = load_test_data()
     X_train = load_training_data()
-    
+    X_test = load_test_data()
+
     lgbm = load_model()
-    
-    X_tree = X_train.drop(columns=["SK_ID_CURR"]).copy()
-    print(lgbm)
-    print(hex(id(lgbm)))
-    print(hex(id(X_tree)))
-    
-    explainer = compute_tree_explainer(lgbm, X_tree)
-    print(explainer)
+    explainer = compute_tree_explainer(lgbm, X_train)
     
     
     ids_avail = X_test["SK_ID_CURR"]
