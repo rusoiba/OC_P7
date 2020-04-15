@@ -8,18 +8,10 @@ Created on Mon Apr  6 15:01:11 2020
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
-from functions import load_variable_description
-
-def load_raw_test_data(): 
-    return pd.read_csv("../../data/input_data/application_test.csv")
-
-#def load_variable_description() : 
-#    return pd.read_csv("../../data/input_data/HomeCredit_columns_description.csv", index_col=0)
-#    
+from functions import load_variable_description, load_raw_test_data
 
 def application_explorer(id_curr) : 
+        """compute and display all informations related to the client current application"""
         test_data = load_raw_test_data()
         test_data["AGE"] = -test_data['DAYS_BIRTH']/365
         test_data["YEARS_EMPLOYED"] = -test_data['DAYS_EMPLOYED']/365

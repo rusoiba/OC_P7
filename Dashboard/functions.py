@@ -33,16 +33,12 @@ def load_model() :
 
 @st.cache(allow_output_mutation=True)
 def compute_tree_explainer(model, X_train) : 
-    print("id du input model", hex(id(model)))
-    print("id du input data", hex(id(X_train)))
-    
     """compute and returns the tree explainer based on a model and the training data"""
     data = X_train.drop(columns=["SK_ID_CURR"]).copy()
-    print("id data", hex(id(data)))
+    #print("id data", hex(id(data)))
     explainer = shap.TreeExplainer(model.booster_, data=data.sample(2000, random_state=12),
                                    feature_dependence="interventional", output="probabilities")
-    
-    print("id du explainer", hex(id(explainer)))
+    #print("id du explainer", hex(id(explainer)))
     return explainer
     
 
@@ -59,9 +55,14 @@ def load_explorer_data():
     prev = pd.read_csv("../../data/output_data/test_prev.csv", index_col=0)#, nrows=100000)
     return bb, bureau, ins, ccb, pos, prev
 
-
+@st.cache(allow_output_mutation=True)
+def load_raw_test_data(): 
+    """load test data as exported from data source"""
+    return pd.read_csv("../../data/input_data/application_test.csv")
 
 #____________________________STATS FUNCTIONS___________________________________
 @st.cache()
 def load_raw_train_data(): 
+    """load train data as exported from data source"""
     return pd.read_csv("../../data/input_data/application_train.csv")
+

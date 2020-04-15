@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from functions import load_raw_train_data
 
 def statistics() : 
+    """compute visual object and responsible for display"""
     data = load_raw_train_data().set_index("SK_ID_CURR")
     #st.dataframe(data.head().dtypes)
     columns = list(data.columns)
