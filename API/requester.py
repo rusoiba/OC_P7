@@ -11,7 +11,7 @@ import pandas as pd
 
 url = 'http://0.0.0.0:80/api/'
 
-data = pd.read_csv("../data/output_data/X_test.csv", nrows=10).set_index("SK_ID_CURR").iloc[8,:]
+data = pd.read_csv("../../data/output_data/X_test.csv", nrows=10).set_index("SK_ID_CURR").iloc[7,:]
 
 j_data = data.to_json()
 

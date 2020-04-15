@@ -28,7 +28,7 @@ app = Flask(__name__)
 def makecalc():
     j_data = request.get_json()
 
-    dtypes_dict = dict(pd.read_csv("../data/output_data/X_train.csv").set_index("SK_ID_CURR").dtypes)
+    dtypes_dict = dict(pd.read_csv("../../data/output_data/X_train.csv").set_index("SK_ID_CURR").dtypes)
     data = pd.DataFrame(j_data, index=["to_predict"]).astype(dtypes_dict)
     prediction = estimator.predict_proba(data)
 
@@ -37,8 +37,8 @@ def makecalc():
     return encodedNumpyData
 
 if __name__ == '__main__':
-    transformer_file = '../model/preprocessor.joblib'
-    estimator_file = '../model/estimator.joblib'
+    transformer_file = '../../model/preprocessor.joblib'
+    estimator_file = '../../model/estimator.joblib'
     transformer = load(transformer_file)
     estimator = load(estimator_file)
     
