@@ -21,7 +21,7 @@ def load_training_data() :
 @st.cache(allow_output_mutation=True)
 def load_variable_description() : 
     '''cached function that returns variable description'''
-    return pd.read_csv("../../data/input_data/HomeCredit_columns_description.csv", index_col=0)
+    return pd.read_csv("../../data/output_data/new_variables_filled.csv")
 
 
 #____________________________PREDICT FUNCTIONS_________________________________
@@ -65,4 +65,5 @@ def load_raw_test_data():
 def load_raw_train_data(): 
     """load train data as exported from data source"""
     return pd.read_csv("../../data/input_data/application_train.csv")
+
 

@@ -9,11 +9,16 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from functions import load_raw_train_data
+from functions import load_raw_train_data, load_raw_test_data
 
-def statistics() : 
+def statistics(id_curr) : 
     """compute visual object and responsible for display"""
-    data = load_raw_train_data().set_index("SK_ID_CURR")
+    raw_data = load_raw_train_data()
+    data = raw_data.copy().set_index("SK_ID_CURR")
+    
+    X_test = load_raw_test_data()
+    to_analyse = X_test.loc[X_test["SK_ID_CURR"] == id_curr, :].drop(columns=["SK_ID_CURR"])
+
     #st.dataframe(data.head().dtypes)
     columns = list(data.columns)
     columns.remove("TARGET")
@@ -27,6 +32,8 @@ def statistics() :
         plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
         
+        st.write("Your client has value", to_analyse[var].values[0], "for variable", var)
+        
     elif data[var].dtypes == float:
         max_var = data[var].max()
         min_var = data[var].min()
@@ -37,8 +44,12 @@ def statistics() :
         plt.title("Repayment Difficulties as a function of {}".format(var))
         plt.xlabel("Probability of default")
         y.loc[y["size"]>100, "mean"].plot.barh()
+
        # plt.bar(x=x, height=y)
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
+        
+        st.write("Your client has value", to_analyse[var].values[0], "for variable", var)
+
         
     else :
         agg_data = data.groupby(var)["TARGET"].agg(["size", "mean"])
@@ -46,3 +57,6 @@ def statistics() :
         plt.title("Repayment Difficulties as a function of {}".format(var))
         plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
+        
+        st.write("Your client has value", to_analyse[var].values[0], "for variable", var)
+

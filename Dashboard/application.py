@@ -46,4 +46,4 @@ elif option == "Explorer" :
     explorer(id_curr)
     
 elif option == "Statistics" : 
-    statistics()
+    statistics(id_curr)

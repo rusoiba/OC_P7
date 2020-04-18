@@ -19,10 +19,13 @@ def predict(id_curr):
     sns.reset_orig()
     X_train = load_training_data()
     X_test = load_test_data()
-
-    lgbm = load_model()
-    explainer = compute_tree_explainer(lgbm, X_train)
     
+    lgbm = load_model()
+    print("id data", hex(id(X_train)))
+    print("id lgbm", hex(id(lgbm)))
+    explainer = compute_tree_explainer(lgbm, X_train)
+    print("id explainer", hex(id(explainer)))
+
     
     ids_avail = X_test["SK_ID_CURR"]
     if (ids_avail == id_curr).sum() > 0 : 
