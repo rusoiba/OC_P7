@@ -23,11 +23,11 @@ def statistics(id_curr) :
     columns = list(data.columns)
     columns.remove("TARGET")
     
-    var = st.selectbox("wich var", columns)
+    var = st.selectbox("Which variable do you want to analyse ?", columns)
     if data[var].dtypes == int:
-        agg_data = data.groupby(var)["TARGET"].agg(["size", "mean"])
+        agg_data = data.groupby(var)["TARGET"].agg(["size", "mean", "median"])
         #st.dataframe(agg_data.loc[agg_data["size"]>100, "mean"])
-        agg_data.loc[agg_data["size"]>100, "mean"].plot.barh()
+        agg_data.loc[agg_data["size"]>50, "mean"].plot.barh()
         plt.title("Repayment Difficulties as a function of {}".format(var))
         plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
@@ -40,10 +40,10 @@ def statistics(id_curr) :
         
         
         x = pd.cut(data[var], bins=np.arange(min_var, max_var, (max_var-min_var)/10)).astype(str)
-        y = data.groupby(x)["TARGET"].agg(["size", "mean"])
+        y = data.groupby(x)["TARGET"].agg(["size", "mean", "median"])
         plt.title("Repayment Difficulties as a function of {}".format(var))
         plt.xlabel("Probability of default")
-        y.loc[y["size"]>100, "mean"].plot.barh()
+        y.loc[y["size"]>50,  "mean"].plot.barh()
 
        # plt.bar(x=x, height=y)
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
@@ -52,8 +52,8 @@ def statistics(id_curr) :
 
         
     else :
-        agg_data = data.groupby(var)["TARGET"].agg(["size", "mean"])
-        agg_data.loc[agg_data["size"]>100, "mean"].plot.barh()
+        agg_data = data.groupby(var)["TARGET"].agg(["size", "mean", "median"])
+        agg_data.loc[agg_data["size"]>50,  "mean"].plot.barh()
         plt.title("Repayment Difficulties as a function of {}".format(var))
         plt.xlabel("Probability of default")
         st.pyplot(bbox_inches='tight', dpi=500,pad_inches=1)
