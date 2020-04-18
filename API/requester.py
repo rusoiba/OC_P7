@@ -9,7 +9,7 @@ Created on Sun Apr 12 23:10:57 2020
 import requests
 import pandas as pd
 
-url = 'http://0.0.0.0:80/api/'
+url = 'https://ocp7-api.herokuapp.com:5000'
 
 data = pd.read_csv("../../data/output_data/X_test.csv", nrows=10).set_index("SK_ID_CURR").iloc[7,:]
 
