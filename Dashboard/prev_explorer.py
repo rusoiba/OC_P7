@@ -10,6 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def prev_explorer(prev, ins, pos, ccb, variables) : 
+    """Displays previous application data"""
     st.header("Previous Applications")
     
     prev_disp_feat = ['NAME_CONTRACT_TYPE', 'AMT_ANNUITY',

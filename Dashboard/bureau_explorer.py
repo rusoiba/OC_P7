@@ -12,8 +12,8 @@ import seaborn as sns
 import numpy as np
 
 def bureau_explorer(bureau, bb, variables) : 
+    """Explorer, displays all bureau and bb related data"""
     # Bureau
-    
     sns.set()
     
     st.header("Summary from Credit Bureau")
