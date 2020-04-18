@@ -20,7 +20,13 @@ class NumpyArrayEncoder(JSONEncoder):
             return obj.tolist()
         return JSONEncoder.default(self, obj)
 
+<<<<<<< HEAD
+estimator_file = './estimator.joblib'
+estimator = load(estimator_file)
+dtypes_dict = dict(pd.read_csv("./X_train_sample.csv", nrows=1).set_index("SK_ID_CURR").dtypes)
+=======
 
+>>>>>>> parent of a7befdf... working API
 
 app = Flask(__name__)
 
