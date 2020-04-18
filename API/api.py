@@ -23,7 +23,9 @@ class NumpyArrayEncoder(JSONEncoder):
 
 estimator_file = './estimator.joblib'
 estimator = load(estimator_file)
-dtypes_dict = dict(pd.read_csv("./X_train_sample.csv", nrows=1).set_index("SK_ID_CURR").dtypes)
+
+dtypes_data = pd.read_csv("./X_train_sample.csv", index_col=0).drop("SK_ID_CURR", axis=1)
+dtypes_dict = dict(dtypes_data.dtypes)
 
 app = Flask(__name__)
 
