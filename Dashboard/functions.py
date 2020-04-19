@@ -42,6 +42,20 @@ def compute_tree_explainer(model, X_train) :
     return explainer
     
 
+import requests
+import json
+import numpy as np
+
+def predict_api(data) :
+    url = 'https://ocp7-api.herokuapp.com'
+    print(data.shape)
+    j_data = data.to_json()
+    headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
+    r = requests.post(url, data=j_data, headers=headers)
+    
+    return round(float(r.text.split(",")[1].replace("]]", ""))*100, 3)
+
+
 #____________________________EXPLORER FUNCTIONS________________________________
     
 @st.cache(allow_output_mutation=True)

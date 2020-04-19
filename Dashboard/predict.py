@@ -11,7 +11,8 @@ import numpy as np
 import shap
 import seaborn as sns
 from functions import load_training_data, load_test_data,\
-load_variable_description, load_model, compute_tree_explainer
+load_variable_description, load_model, compute_tree_explainer, \
+predict_api
 
     
 def predict(id_curr):
@@ -30,11 +31,21 @@ def predict(id_curr):
     ids_avail = X_test["SK_ID_CURR"]
     if (ids_avail == id_curr).sum() > 0 : 
         to_analyse = X_test.loc[X_test["SK_ID_CURR"] == id_curr, :].drop(columns=["SK_ID_CURR"])
+        
+        st.write("Default loan probability for client id", id_curr, "is", predict_api(to_analyse.iloc[0,:]), "%")
+        
+        
+        st.subheader("Score interpretation")
+        st.write("The following plot must be intepreted as follows :")
+        st.write("- **Arrows are contribution** of each client attribute (family status, income, ...) on the **final score**, the bigger the arrow, the greater its contribution")
+        st.write("- **Blue** arrows are **good contributions** : they tend to reduce client's default risk")
+        st.write("- **Red** arrows are **bad contributions** : they tend to increase client's default risk")
+        st.write("- Intersection of blue and red arrows is the predicted level of risk")
+        st.write("- This intersection is surrounded feature contributions, from big to small as step aside from predicted value")
         shap.initjs()
         
         shap_values = explainer.shap_values(to_analyse, check_additivity=True)
         
-        st.subheader("Probability of payment default for loan ID{}".format(id_curr))
         shap.force_plot(explainer.expected_value,
                                  shap_values[0],
                                  to_analyse.round(2),
