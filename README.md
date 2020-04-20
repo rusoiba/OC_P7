@@ -17,6 +17,7 @@ It enables the user to explore multiple aspects of loaner's data coming for vari
 The predict module uses a ML Model to predict the probability of payment default. It is based on the agregation of all data sources available [here](https://www.kaggle.com/c/home-credit-default-risk/data)
 
 The whole modeling process is described is this [technical note](https://github.com/rusoiba/OC_P7/blob/master/Projet7.pdf).
+This model is accessible through an API hosted on Heroku thanks to a Flask server.
 
 The interpretability of the prediction is given by a **Force Plot** showing the local importance of each variable of the model. Force plot is a method of [SHAP module](https://github.com/slundberg/shap) and it basically defines what makes the prediction what is it with respect to this particular client. As you probably know, decisionnal paths are quite singular when using Tree based model.
 
